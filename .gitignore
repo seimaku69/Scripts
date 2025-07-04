@@ -1,0 +1,6 @@
+# keine XSLTs berücksichtigen
+*.xslt
+# keine Markdown Dateien berfücksichtigen
+*.md
+# ..dennoch berücksichtigen
+!README.md
