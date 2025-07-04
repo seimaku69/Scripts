@@ -1,6 +1,6 @@
 <!-- Begin Metadata  -->
 [Freeplane file]:- '/home/markus/Zentrum/Projekte/Implementierung/Freeplane/Mindmaps/Github_Readme.mm'  
-[Export date]:- '2025-07-04 19:53:15'  
+[Export date]:- '2025-07-04 21:30:05'  
 [Export script]:- 'ExportBranchToMarkdown.groovy'  
 [Script author]:- 'Markus Seilnacht; seimaku(at)proton(dot)me'  
 <!-- End Metadata -->  
@@ -62,8 +62,6 @@ my hope to be useful for you - it's a little appreciation for the work that has 
 For the most of them you have to permit the rights in Freeplane settings.  
   
 *These scripts are published under GPL version 3 or later. There exists no warranty in any way for this code !*  
-  
-**I can not publish all scripts at once - so if you looking for a missing one, please try the next days..**
  
   
   
@@ -495,7 +493,7 @@ use it.
   
 LaTex is no problem - the notes are simply copied as ASCII and can be rendered in the same way as Markdown.  
   
-**This README is written in Freeplane and simply exported to Markdown.. ;-))**  
+**This README is written in Freeplane and simply exported to Markdown with this script.. ;-))**  
   
 #### Import Markdown to node  
   
