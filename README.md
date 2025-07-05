@@ -1,15 +1,16 @@
 <!-- Begin Metadata  -->
 [Freeplane file]:- '/home/markus/Zentrum/Projekte/Implementierung/Freeplane/Mindmaps/Github_Readme.mm'  
-[Export date]:- '2025-07-04 21:30:05'  
+[Export date]:- '2025-07-05 14:42:32'  
 [Export script]:- 'ExportBranchToMarkdown.groovy'  
 [Script author]:- 'Markus Seilnacht; seimaku(at)proton(dot)me'  
 <!-- End Metadata -->  
   
 # README - Freeplane Scripts  
   
-*Details :*  
-**author :** Markus Seilnacht  
-**date   :** 2025-07-04  
+*Attributes :*  
+
+ > author : Markus Seilnacht  
+ > date : 2025-07-05 14:42    
   
 ## Table of Contents  
   
@@ -173,7 +174,7 @@ obstructive on the other hand.
   
 **Task :** Deleting a map in filesystem from Freeplane.  
   
-**Attention :** The file is not moved to trash - it's deleted finally !  
+**Attention :** The file is not moved to trash - it's deleted finally !!  
   
 #### Open a mindmap in new Freeplane instance  
   
