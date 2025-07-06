@@ -1,7 +1,7 @@
 // @ExecutionModes({ON_SELECTED_NODE})
 
 // author : Markus Seilnacht
-// date : 2025-06-25
+// date : 2025-07-06
 // (c) licensed under GPL-3.0 or later
 
 /*
@@ -11,9 +11,8 @@
     In 'ExecuteScriptInEditor' the same file have to be used !
 
     ATTENTION : 
-    1. The editor in this script, which is in use to edit any scripts, can't be the
-    same instance as the one to edit note-texts. 
-    This one is not opened modal and if they are used parallel the note change is 
+    1. The editor in this script can't be the same instance as the one to edit note-texts. 
+    This one is not opened modal and if they are used in one instance the note change is 
     not recognized and sved in the right way.
 
     2. It is recommended to edit the value of 'editor' for your own needs.
@@ -22,9 +21,10 @@
 
 // setup for editor to use
 // final String editor = "/usr/bin/xed"
-// final String editor = "flatpak run org.geany.Geany"  // flatpak :-/
-final String editor = "/usr/bin/flatpak run --branch=stable --arch=x86_64 --command=kate --file-forwarding org.kde.kate"
+final String editor = "flatpak run org.geany.Geany"  // flatpak :-/
+// final String editor = "/usr/bin/flatpak run --branch=stable --arch=x86_64 --command=kate --file-forwarding org.kde.kate"
 // final String editor = "/usr/bin/notepadqq --new-window"
+// final String editor = "/opt/sublime_text/sublime_text"
 
 // path to temporary script file - e.g. '~/.config/freeplane/[version]/tmpScript.groovy
 String tmpPath = c.getUserDirectory().getAbsolutePath() + File.separator + "tmpScript.groovy"

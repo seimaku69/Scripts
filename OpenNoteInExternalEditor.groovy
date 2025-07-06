@@ -1,7 +1,7 @@
 // @ExecutionModes({ON_SELECTED_NODE})
 
 // author : Markus Seilnacht
-// date : 2025-06-25
+// date : 2025-07-06
 // (c) licensed under GPL-3.0 or later
 
 /*
@@ -17,7 +17,10 @@ If you don't save the temporary file in your editor there are no changes in your
     3. The external editor is opened in modal-mode - means Freeplane isn't available 
         before closing it.
     
-    Tip : You can assign a shortcut to this script in Freeplane to make access easier !
+    Tips : 
+        1. You can assign a shortcut to this script in Freeplane to make access easier !
+        2. Set configuration of your editor to show white-spaces - so you can see newlines.
+        3. If problems occur with your editor try the commented lines for 'tmpPath' and 'tmpFile' 
 */
 
 /* 
@@ -28,6 +31,7 @@ import java.io.File
 // final String editor = "xed --new-window"
 final String editor = "/usr/bin/ghostwriter"    // Markdown editor with preview
 // final String editor = "/usr/bin/notepadqq"
+// final String editor = "/opt/sublime_text/sublime_text -w"
 
 // check content type of note to set extension 
 // extensions determines often syntax highlighting in an editor
@@ -50,7 +54,7 @@ switch (node.getNoteContentType()) {
 //create temporary file
 try {
     //tmpFile = new File(tmpPath)
-    tmpFile = File.createTempFile('~' + node.id + ":", ext)
+    tmpFile = File.createTempFile('~' + node.id + ":", ext)   // doesn't work with all editors
     String text = node.note ?: ""
     tmpFile.setText(text, 'UTF-8')
 } catch (IOException e) {

@@ -1,6 +1,6 @@
 <!-- Begin Metadata  -->
 [Freeplane file]:- '/home/markus/Zentrum/Projekte/Implementierung/Freeplane/Mindmaps/Github_Readme.mm'  
-[Export date]:- '2025-07-05 14:42:32'  
+[Export date]:- '2025-07-06 19:17:20'  
 [Export script]:- 'ExportBranchToMarkdown.groovy'  
 [Script author]:- 'Markus Seilnacht; seimaku(at)proton(dot)me'  
 <!-- End Metadata -->  
@@ -10,7 +10,7 @@
 *Attributes :*  
 
  > author : Markus Seilnacht  
- > date : 2025-07-05 14:42    
+ > date : 2025-07-06 19:17    
   
 ## Table of Contents  
   
@@ -141,26 +141,31 @@ in this execution.
   
 **Idea :** The standard note-editor in Freeplane is not very useful if you want to write text in a non-standard way
 like **Markdown**, programming code, a.s.o. It would be much more comfortable to use an editor which offers more
-features for the requirements - f.e. Syntax-Highlighting, Code-completion, Markdown rendering and a lot of others.  
-Often I use [Ghostwriter](https://ghostwriter.kde.org/de/) for Markdown texts, because there is a direct rendering.
-A good choice for the same reason is [Kate](https://kate-editor.org) with activated 'Preview' module.  
-Freeplane's skills, especailly with Markdown, are not the best - mostly it is better to use the Contenttype 'Standard'.. 
-Ghostwriter does not care about the extension.  
+features for your requirements - f.e. Syntax-Highlighting, Code-completion, Markdown rendering and a lot of others.  
+Of course it should not be a 'big' IDE like Eclipse, VSCode or VSCodium because you will start it every time you edit a note
+and yout don't need 99% of their features for editing Markdown only.  
+If you've got an affinity for coding or lightwight IDEs [Geany](https://www.geany.org) (see Plugind) and 
+[Kate](https://kate-editor.org) with activated 'Preview' module could be your best choice. If not, you can take a 
+look to [Ghostwriter](https://ghostwriter.kde.org/de/), [Marktext](https://sourceforge.net/projects/marktext.mirror/)
+or [Sublime Text](https://www.sublimetext.com)(install package "Markdown Preview").  
+Freeplane's behaviour with Markdown is not the best - mostly it is better to use the Contenttype 'Standard'
+and edit 'normal' ASCII-text..  
   
 **File :** *[OpenNoteInExternalEditor.groovy](./OpenNoteInExternalEditor.groovy)*  
   
 **Task :** This script opens the favorite editor with the note of the actual selected node - it replaces the internal 
 note editor (e.g. F7).  
-Therefore a temporary file is generated (name like '~ID_.....ext)') in the user directory of Freeplane. It's name
-depends on the ID for the actual node and it's ext is determined by the content type of this note 
+Therefore a temporary file is generated (name like '~ID_.....ext)' in '/tmp' directory. Its name
+depends on the ID for the actual node and it's extension is determined by the content type of this note 
 (see 'Tool panel -- Content types). The extension (ext) is important because your editor can recognize your file-type.  
+Some editors, like Ghostwriter or Marktext don't care about the file-extension..  
   
 **Tip :** ..same as above - use shortcut in Freeplane (e.g. Shift + F7) for quick access.  
   
-**Attention :** It is strongly recommended to set the path to your favorite editor in the final 'editor' String.  
-Your editor is opened modal - means you can't access Freplane before closing your editor. Freeplane is waiting
+**Attention :** It is recommended to set the path to your favorite editor in the final 'editor' String.  
+Your editor is opened modal - means you can't access Freplane before closing this file. Freeplane is waiting
 until you finished your edits to overtake the new text.  
-It causes difficulties if you use an existing instance of an editor !
+In some cases it causes difficulties if you are using an existing instance of an editor !
   
   
 ### Handling Mindmaps  
@@ -494,7 +499,7 @@ use it.
   
 LaTex is no problem - the notes are simply copied as ASCII and can be rendered in the same way as Markdown.  
   
-**This README is written in Freeplane and simply exported to Markdown with this script.. ;-))**  
+***This README is written in Freeplane and simply exported to Markdown with this script.. ;-))***  
   
 #### Import Markdown to node  
   
