@@ -120,7 +120,7 @@ if (createTOC) {
     sbTOC << lf << "  " << lf
     for (n in node.findAll()) {
         nLevel = n.getNodeLevel(true)
-        stripText = n.getText().strip()
+        stripText = n.getTransformedText().strip()
         lnk = stripText.toLowerCase().replace(" ", "-")
         sbTOC << getPrecStr(nLevel - startNodeLevel, "\t") << "- [$stripText](#$lnk)  " << lf
     }
@@ -133,10 +133,10 @@ addMetadata(sb)
 node.findAll().each {
     // write header - don't touch user defined headers
     if (it.getPlainText().startsWith(hIndicator)) {
-        sb << "  " << lf << it.text << "  " << lf
+        sb << "  " << lf << it.getTransformedText() << "  " << lf
     }
     else {
-        sb << "  " << lf << getPrecStr(it.getNodeLevel(true) - startNodeLevel + 1, hIndicator) << " $it.text  " << lf
+        sb << "  " << lf << getPrecStr(it.getNodeLevel(true) - startNodeLevel + 1, hIndicator) << " $it.transformedText  " << lf
     }
 
     // picture assigned to node
@@ -150,14 +150,16 @@ node.findAll().each {
         sb << "  " << lf << "*Details :*  " << lf << it.getDetails().toString() << "  " << lf
     }
 
-    // handle attributes - results in a code-block
+    // handle attributes - written as code-block - formulas calculated
     if (!it.attributes.empty) {
+        attrs = it.getAttributes()
         sb << "  " << lf << "*Attributes :*  " << lf
-        for (i = 0; i < it.getAttributes().size(); i++) {
-            sb << lf << " > " << it.attributes.getKey(i) << " : " << it.attributes.get(i) << "  "
+        sb << "~~~  " << lf
+        for (i = 0; i < attrs.size(); i++) {
+            //sb << lf << " > " << attrs.getNames()[i] << " : " << attrs.getValues()[i] << "  "
+            sb << attrs.getNames()[i] << " : " << attrs.getValues()[i] << "  " << lf
         }
-        sb << "  " << lf
-    // sb << "\n" << it.attributes.getMap()
+        sb << "~~~  " << lf
     }
 
     // export Freeplane links (hyper, local hyper, website) as markdown

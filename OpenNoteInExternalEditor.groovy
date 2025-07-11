@@ -24,14 +24,18 @@ If you don't save the temporary file in your editor there are no changes in your
 */
 
 /* 
+    #todo 01 : Notizen nicht modal öffnen ?!
+        Dieses Script öffnet Notizen aktuell in einem modale Modus.
+        Sollte es möglich sein dies nicht-modal zu tun ? Anwendungen ? Änderungen speichern ?
 */
 
 import java.io.File
 
 // final String editor = "xed --new-window"
-final String editor = "/usr/bin/ghostwriter"    // Markdown editor with preview
+// final String editor = "/usr/bin/ghostwriter"    // Markdown editor with preview
 // final String editor = "/usr/bin/notepadqq"
 // final String editor = "/opt/sublime_text/sublime_text -w"
+final String editor = "/usr/bin/typora"
 
 // check content type of note to set extension 
 // extensions determines often syntax highlighting in an editor
