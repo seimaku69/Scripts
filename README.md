@@ -1,6 +1,6 @@
 <!-- Begin Metadata  -->
 [Freeplane file]:- '/home/markus/Zentrum/Projekte/Implementierung/Freeplane/Mindmaps/Github_Readme.mm'  
-[Export date]:- '2025-07-06 19:17:20'  
+[Export date]:- '2025-07-11 17:58:53'  
 [Export script]:- 'ExportBranchToMarkdown.groovy'  
 [Script author]:- 'Markus Seilnacht; seimaku(at)proton(dot)me'  
 <!-- End Metadata -->  
@@ -8,9 +8,10 @@
 # README - Freeplane Scripts  
   
 *Attributes :*  
-
- > author : Markus Seilnacht  
- > date : 2025-07-06 19:17    
+~~~  
+author : Markus Seilnacht  
+date : 2025-07-11  
+~~~  
   
 ## Table of Contents  
   
@@ -51,6 +52,7 @@
   
 ## Introduction  
   
+  
 Freeplane is widely used in many fields of activity. Mindmapping isn't just a concept to support brainstorming,
 it can be used to manage a lot of things in your private or business life.  
 For a Mindmap it doesn't matter which information is modeled with its nodes, attributes, connections a.s.o.
@@ -68,6 +70,7 @@ For the most of them you have to permit the rights in Freeplane settings.
   
 ## Installation of scripts  
   
+  
 To use these scripts you just have to copy them in your script folder (e.g. '~/.config/freeplane/\<version\>/scripts)
 ('Tools \> Open User directory')/scripts and restart Freeplane - it's the standard procedure for installation of new scripts
 in Freeplane.  
@@ -75,25 +78,28 @@ in Freeplane.
   
 ## Scripts  
   
+  
 ### Script-Developement  
   
+  
 #### Start any script on a node  
+  
   
 **Idea :** Execute any script on your system in Freeplane.  
 Normally you can only start scripts in the script editor or if they are installed in your script directory.  
 Editing a script wherever you want and execute it without installation extends the possibilities enormous.  
-  
+
 **File :** *[StartAnyScriptOnNode.groovy](./StartAnyScriptOnNode.groovy)*  
-  
+
 **Task :** This script allows you to start any script in your environment without installing it in Freeplane's 
 script folder.  
-  
+
 **Tip :** Define a shortcut in Freeplane to use this script.  
-  
-**Attention :** It permits all rights to your selected script - be sure about your code !
-  
+
+**Attention :** It permits all rights to your selected script - be sure about your code !  
   
 #### Open external script editor  
+  
   
 **Idea :** The standard (groovy) script editor in Freeplane is very restrictive. Often it is helpful to have some
 features of a more powerful editor for implementation and testing code.  
@@ -117,27 +123,26 @@ to open and edit "\<Freeplane-User-directory\>/tmpScript.groovy" manually.('~/.c
 **Attention :** The script opens the user-defined editor - it is neccessary to set the final String for 'editor' in this script 
 to your own needs or preferences. Of course it should be unique..  
 It permits all rights to your script in the editor - so be sure about your code.  
-  
-  
+    
   
 #### Execute script in editor  
   
+  
 **Idea :** Execute the script (predefined name) which is edited in your prefered editor.  
-  
+
 **File :** *[ExecuteScriptInEditor.groovy](./ExecuteScriptInEditor.groovy)*  
-  
+
 **Task :** This script is only reasonable in combination with the existing temporary script file ("tmpScript.groovy") - see 
 [Open external script editor](#open-external-script-editor).  
 It executes this file as a groovy script.  
 With this you've got a total replacement of the standard groovy script editor in Freeplane.  
-  
+
 **Tip :** Use a shortcut in Freeplane to start this script in a very fast and simple way.  
-  
-**Attention :** It doesn't matter which editor you use to work with "tmpScript.groovy" - only name and path are used
-in this execution.
-  
+
+**Attention :** It doesn't matter which editor you use to work with "tmpScript.groovy" - only name and path are used in this execution.  
   
 #### Open note in external editor  
+  
   
 **Idea :** The standard note-editor in Freeplane is not very useful if you want to write text in a non-standard way
 like **Markdown**, programming code, a.s.o. It would be much more comfortable to use an editor which offers more
@@ -146,31 +151,34 @@ Of course it should not be a 'big' IDE like Eclipse, VSCode or VSCodium because 
 and yout don't need 99% of their features for editing Markdown only.  
 If you've got an affinity for coding or lightwight IDEs [Geany](https://www.geany.org) (see Plugind) and 
 [Kate](https://kate-editor.org) with activated 'Preview' module could be your best choice. If not, you can take a 
-look to [Ghostwriter](https://ghostwriter.kde.org/de/), [Marktext](https://sourceforge.net/projects/marktext.mirror/)
-or [Sublime Text](https://www.sublimetext.com)(install package "Markdown Preview").  
-Freeplane's behaviour with Markdown is not the best - mostly it is better to use the Contenttype 'Standard'
+look to [Ghostwriter](https://ghostwriter.kde.org/de/), [Marktext](https://sourceforge.net/projects/marktext.mirror/),
+[Typora](https://typora.io) or [Sublime Text](https://www.sublimetext.com)(install package "Markdown Preview").  
+Freeplane's behaviour with Markdown is not the best - mostly it is better to use the Content-type 'Standard'
 and edit 'normal' ASCII-text..  
-  
+
 **File :** *[OpenNoteInExternalEditor.groovy](./OpenNoteInExternalEditor.groovy)*  
-  
+
 **Task :** This script opens the favorite editor with the note of the actual selected node - it replaces the internal 
 note editor (e.g. F7).  
 Therefore a temporary file is generated (name like '~ID_.....ext)' in '/tmp' directory. Its name
 depends on the ID for the actual node and it's extension is determined by the content type of this note 
-(see 'Tool panel -- Content types). The extension (ext) is important because your editor can recognize your file-type.  
-Some editors, like Ghostwriter or Marktext don't care about the file-extension..  
-  
+(see 'Tool panel -- Content types). The extension (ext) is of interest because some editors can recognize your file-type,
+which leeads to Syntax-Highlihgting a.s.o.  
+A few of them like Ghostwriter, Marktext or Typora don't care about the file-extension..  
+The temporary file is deleted after closing it and  your note is updated only if you saved it before. 
+
 **Tip :** ..same as above - use shortcut in Freeplane (e.g. Shift + F7) for quick access.  
-  
+
 **Attention :** It is recommended to set the path to your favorite editor in the final 'editor' String.  
 Your editor is opened modal - means you can't access Freplane before closing this file. Freeplane is waiting
 until you finished your edits to overtake the new text.  
-In some cases it causes difficulties if you are using an existing instance of an editor !
-  
+In some cases it causes difficulties if you are using an existing instance of an editor !  
   
 ### Handling Mindmaps  
   
+  
 #### Delete a mindmap  
+  
   
 **Idea :** You can not delete a map in your system directly in Freeplane. This makes it save on the one hand and is sometimes
 obstructive on the other hand.  
@@ -183,6 +191,7 @@ obstructive on the other hand.
   
 #### Open a mindmap in new Freeplane instance  
   
+  
 **Idea :** Sometimes it is useful to see two maps at once or see the same map in 'Outline View' and 'Edit View'. Of course 
 you can use a new Map-View ('View - new map view') and undock this window. But an undocked window is not a new instance 
 of Freeplane - you miss a lot of things like menu, icon-bars, a.s.o.  
@@ -193,6 +202,7 @@ Especially when you want to link to a node in another map, it is very helpful to
 **Task :** Open the actual map in a new instance of Freeplane. You can close or not this map in your first instance.  
   
 #### Select distant successors  
+  
   
 **Idea :** Sometimes it is useful to select successors of a node at a certain level (in perspective of actual node).
 Selecting childs is a subset of this question with the distance '1'.  
@@ -209,6 +219,7 @@ That's a short way to configure it to often used selects - e.g. childs (distance
 2. If multiple nodes are selected, it may be possible that some of them dont have any successors at the choosen distance.  
   
 #### Filter connected nodes  
+  
   
 **Idea :** Often it is useful to which nodes are connected, in some case, to my actual one.  
 It can be difficult to see because connections or relations between nodes have many possibilities :  
@@ -229,6 +240,7 @@ it occurs..)
   
 #### Merge selected nodes  
   
+  
 **Idea :** During the work with mindmaps you create a lot of nodes, attributes, notes and other
 things which are representing your thoughts or informations.  
 One of the big features of mindmapping is it's possibilities to create a fast picture of your interests and 
@@ -247,6 +259,7 @@ You can choose :
   
 #### Rename attributes in selected nodes  
   
+  
 **Idea :** Attributes are properties of a represented entity in our mindmap. In some use-cases it would be necessary
 to give them another name. Freeplane in it's actual version (1.12.11) does not offer any comfortable way to do that
 for a set of nodes in your mindmap.  
@@ -261,7 +274,9 @@ It renames only the attributes of selected nodes.
   
 ### Handling Links and Files  
   
+  
 #### Execute script in attribute value  
+  
   
 **Idea :** Sometimes it can be useful to start a script which is linked in an attribute of a node.  
 For example you can create a node with attributes and script-links as values to do some work in your 
@@ -276,6 +291,7 @@ As value you can use any script-file..
 is doing.  
   
 #### Append node with file-link  
+  
   
 **Idea :** If you managing tasks, orders, meeting-protocols or any other thigs it is often neccessary
 to link some documents or pictures to an entity (node) in your mindmap.  
@@ -292,6 +308,7 @@ funcionality in the menu 'File > Import > Folder structure'.
   
 #### Execute script in node link  
   
+  
 **Idea :** As in [Execute script in attribute value](#execute-script-in-attribute-value) it will be useful
 to add some functionality with a script to a mindmap and access it via a link in a node.  
   
@@ -304,6 +321,7 @@ So be sure about your code ;-)
   
 #### Open links of selected nodes  
   
+  
 **Idea :** In Freeplane you can define a link to a node. You get little arrow before the node text and 
 you can open this link by a single click.  
 OK that's nice - but if I've got multiple nodes, let's say as resources (childs) to a task or project and I want
@@ -314,6 +332,7 @@ to open all these links simultaneously ?
 **Task :** This script opens all links of selected nodes at once.  
   
 #### Open link from attributes  
+  
   
 **Idea :** In a lot of use-cases it can be useful to link some files or URLs in attribute values.  
 Additionally it could be nice to use Markdown links in some values.  
@@ -335,6 +354,7 @@ running system, which value is best - keep an eye on that, if there are any prob
 (variable 'pause' in the first lines of the script)  
   
 #### Create link to a node in any map  
+  
   
 **Idea :** Freeplane has some functionality to create implicit and explicit links from one node to another.  
 *Explicit links* are links which create an arrow (line) from one node to another in the mindmap - they can have 
@@ -368,7 +388,9 @@ If you don't change any 'ask..' default value, you will be asked for both cases.
   
 ### Task management  
   
+  
 #### List all tasks  
+  
   
 **Idea :** Managing tasks is one of the most important use-cases today. Using a mindmapping application brings
 a lot of benefits.  
@@ -412,6 +434,7 @@ or values - perhaps you want to overtake them from other tools or way of thinkin
   
 #### List due tasks  
   
+  
 **Idea :** If we manage some tasks and they have a due date - how can I get a report of tasks which are due or 
 overdue ?  
   
@@ -433,6 +456,7 @@ Nodes are listed in ouput when (both are true !) :
   
   
 #### Create Tracking-ID  
+  
   
 **Idea :** For many use-cases it is important to manage different documents on your system - emails, protocols, 
 contracts, pictures, media-files etc..  
@@ -460,6 +484,7 @@ To use a date-time stamp as Tracking-ID offers an additional meaning to the user
   
 #### Find files with Tracking-ID  
   
+  
 **Idea :** Using a Trackin-ID (see [Create Trackin-ID](#create-tracking-id) is a useful concept to connect
 files and emails to a node in your mindmap or to hold very different things together in a special context.  
 If you are using this concept in your mindmap and renamed files or modified (e.g. email-headers) them, it 
@@ -480,28 +505,34 @@ Organize your projects useful.
   
 ### Markdown  
   
+  
 #### Export branch to Markdown  
   
-**Idea :** Freeplanes Markdown Export is not realy useful for my requirements. Missing header-characters,
-no TOC (table of contents), loose of attributes and links a.s.o. makes it difficult for many use-cases.  
   
+**Idea :** Freeplanes Markdown Export is not realy comfortable. Missing header-characters,
+no TOC (table of contents), loose of attributes and links a.s.o. makes it less useful for many use-cases.  
+
 **File :** *[ExportBranchToMarkdown.groovy](./ExportBranchToMarkdown.groovy)*  
-  
+
 **Task :** This script exports a selected branch to Markdown (GitHub Flavored Markdown).  
-You can choose if you want to create a table of contents (TOC). It recognizes attributes, links, 
-pictures, a.s.o and you can choose which elements you want to copy to your Markdown file.  
-The notes are copied as they are - so it makes sense to write them in 'Standard' or 'Markdown' Format.  
-  
-**Attention :** It is recommended to write your note as Markdown text - use content format 'standard' or
-'markdown' (markdown is not alway rendered correctly).  
-It makes no sense to do some formatting as HTML in your notes and export them to Markdown if you know how to
+You can choose to create a table of contents (TOC). It recognizes attributes, links, tags, alias,
+pictures, a.s.o.  
+The notes are copied as they are - so it makes sense to write them in Markdown.  
+
+**Attention :** Using content format 'standard' for notes and node-text is the best choice in my eyes, because 'markdown'  is not alway rendered correctly.  
+It makes no sense to do some complicated formatting in your notes and export them to Markdown - if you know how to
 use it.  
-  
+..and vice versa a Markdown export will not be useful for you.  
+*If you want to export the whole mindmap you can simply select the root.*  
+
+*Formulas in node-texts and attributes are exported with calculated values and not as formulas.*
+
 LaTex is no problem - the notes are simply copied as ASCII and can be rendered in the same way as Markdown.  
-  
+
 ***This README is written in Freeplane and simply exported to Markdown with this script.. ;-))***  
   
 #### Import Markdown to node  
+  
   
 **Idea :** Many People writing their texts in Markdown because it is much more simple, portable and efficient
 than a word processing application.  
@@ -530,6 +561,7 @@ To use an external editor - see my script [Open note in external editor](#open-n
   
   
 #### Open Markdown link in note  
+  
   
 **Idea :** While working with Freeplane as an authoring-system and creating Markdown notes, it was 
 sometimes neccessary to check my written links in the text.  
