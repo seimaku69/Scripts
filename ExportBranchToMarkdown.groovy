@@ -15,12 +15,6 @@
 */
 
 /* 
-    #todo 01 : Knotentext als Formal
-        getText() liefert den eigentlichen Knodentext - die Formal selbst..
-        Sollte hier getTransformedText() verwendet werden ?
-
-    #todo 03 : Was ist mit Tags, Alias, Icons ?
-
     #todo 04 : Bereitstellung einer Auswahl, welche Elementen exportiert werden sollen..
         (s. MergeSelectedNodes)
 */
@@ -132,31 +126,43 @@ addMetadata(sb)
 
 node.findAll().each {
     // write header - don't touch user defined headers
+    transText = it.getTransformedText().strip()
     if (it.getPlainText().startsWith(hIndicator)) {
-        sb << "  " << lf << it.getTransformedText() << "  " << lf
+        sb << "  " << lf << transText << "  " << lf
     }
     else {
-        sb << "  " << lf << getPrecStr(it.getNodeLevel(true) - startNodeLevel + 1, hIndicator) << " $it.transformedText  " << lf
+        sb << "  " << lf << getPrecStr(it.getNodeLevel(true) - startNodeLevel + 1, hIndicator) << " $transText  " << lf
     }
+    sb << "  " << lf
 
     // picture assigned to node
     if (it.getExternalObject()) {
         uri = it.getExternalObject().getUri()
-        sb << lf << "![$it.text]($uri)" << lf
+        sb << "![$it.text]($uri)  " << lf
+    }
+
+    // alias of node
+    if (!it.getAlias().isEmpty()) {
+        sb << "*Alias :* " << it.getAlias() << "  " << lf
+    }
+
+    // tags of node
+    tagsList = it.getTags().getTags()
+    if (tagsList.size() > 0) {
+        sb << "*Tags :* " << tagsList.toString() << "  " << lf
     }
 
     // details of node
     if (it.getDetails()) {
-        sb << "  " << lf << "*Details :*  " << lf << it.getDetails().toString() << "  " << lf
+        sb << "*Details :*  " << lf << it.getDetails().toString() << "  " << lf
     }
 
     // handle attributes - written as code-block - formulas calculated
     if (!it.attributes.empty) {
         attrs = it.getAttributes()
-        sb << "  " << lf << "*Attributes :*  " << lf
+        sb << "*Attributes :*  " << lf
         sb << "~~~  " << lf
         for (i = 0; i < attrs.size(); i++) {
-            //sb << lf << " > " << attrs.getNames()[i] << " : " << attrs.getValues()[i] << "  "
             sb << attrs.getNames()[i] << " : " << attrs.getValues()[i] << "  " << lf
         }
         sb << "~~~  " << lf
