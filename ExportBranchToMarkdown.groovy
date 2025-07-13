@@ -1,7 +1,7 @@
 // @ExecutionModes({ON_SELECTED_NODE})
 
 // author : Markus Seilnacht
-// date : 2025-06-23
+// date : 2025-07-11
 // (c) licensed under GPL-3.0 or later
 
 /*
@@ -15,7 +15,7 @@
 */
 
 /* 
-    #todo 04 : Bereitstellung einer Auswahl, welche Elementen exportiert werden sollen..
+    #todo 04 : Bereitstellung einer Auswahl, welche Elemente exportiert werden sollen..
         (s. MergeSelectedNodes)
 */
 
@@ -56,12 +56,14 @@ def String getPrecStr(int relLevel, String charStr) {
     input   : StringBuffer to write to
 */
 def addMetadata(StringBuffer strBuff) {
-    strBuff << "<!-- Begin Metadata  -->" << lf
+    strBuff << "<!-- Begin Metadata  " << lf
+    strBuff << "  " << lf
     strBuff << "[Freeplane file]:- '" << node.getMindMap().getFile().getPath() << "'  " + lf
     strBuff << "[Export date]:- '" << format(new Date(), "yyyy-MM-dd HH:mm:ss") << "'  " + lf
     strBuff << "[Export script]:- 'ExportBranchToMarkdown.groovy'" << "  " + lf
     strBuff << "[Script author]:- 'Markus Seilnacht; seimaku(at)proton(dot)me'" << "  " + lf
-    strBuff << "<!-- End Metadata -->  " + lf
+    strBuff << "  " << lf
+    strBuff << "End Metadata -->  " + lf
 }
 
 /*
@@ -128,10 +130,10 @@ node.findAll().each {
     // write header - don't touch user defined headers
     transText = it.getTransformedText().strip()
     if (it.getPlainText().startsWith(hIndicator)) {
-        sb << "  " << lf << transText << "  " << lf
+        sb << "  " << lf << transText << lf
     }
     else {
-        sb << "  " << lf << getPrecStr(it.getNodeLevel(true) - startNodeLevel + 1, hIndicator) << " $transText  " << lf
+        sb << "  " << lf << getPrecStr(it.getNodeLevel(true) - startNodeLevel + 1, hIndicator) << " $transText" << lf
     }
     sb << "  " << lf
 
@@ -161,11 +163,12 @@ node.findAll().each {
     if (!it.attributes.empty) {
         attrs = it.getAttributes()
         sb << "*Attributes :*  " << lf
-        sb << "~~~  " << lf
+        sb << "  " << lf
+        sb << "~~~" << lf
         for (i = 0; i < attrs.size(); i++) {
             sb << attrs.getNames()[i] << " : " << attrs.getValues()[i] << "  " << lf
         }
-        sb << "~~~  " << lf
+        sb << "~~~" << lf
     }
 
     // export Freeplane links (hyper, local hyper, website) as markdown
