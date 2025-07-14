@@ -1,4 +1,4 @@
-// @ExecutionModes({ON_SELECTED_NODE})
+// @ExecutionModes({ON_SINGLE_NODE})
 
 // author : Markus Seilnacht
 // date : 2025-07-06
