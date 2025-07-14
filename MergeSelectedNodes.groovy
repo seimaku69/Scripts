@@ -31,7 +31,7 @@ boolean mergeIcons = true
 boolean mergeTags = true
 boolean mergeDetails = true
 boolean mergeAttrs = true
-boolean mergeNotes = false
+boolean mergeNotes = true
 boolean mergeChilds = true
 boolean mergeConns = true
 
