@@ -31,7 +31,7 @@ boolean mergeIcons = true
 boolean mergeTags = true
 boolean mergeDetails = true
 boolean mergeAttrs = true
-boolean mergeNotes = true
+boolean mergeNotes = false
 boolean mergeChilds = true
 boolean mergeConns = true
 
@@ -67,7 +67,7 @@ if (selNodes.size() <= 1) {
 JPanel panel = new JPanel()
 panel.setLayout(new GridLayout(7,1))
 // Checkbox for Icons
-ckIcons = new JCheckBox("Icons", true)
+ckIcons = new JCheckBox("Icons", mergeIcons)
 ckIcons.addItemListener(new ItemListener() {
 	public void itemStateChanged(ItemEvent e) {
 		mergeIcons = (e.getStateChange() == ItemEvent.SELECTED) ? true : false
@@ -75,7 +75,7 @@ ckIcons.addItemListener(new ItemListener() {
 })
 panel.add(ckIcons)
 // Checkbox for Tags
-ckTags = new JCheckBox("Tags", true)
+ckTags = new JCheckBox("Tags", mergeTags)
 ckTags.addItemListener(new ItemListener() {
 	public void itemStateChanged(ItemEvent e) {
 		mergeTags = (e.getStateChange() == ItemEvent.SELECTED) ? true : false
@@ -84,7 +84,7 @@ ckTags.addItemListener(new ItemListener() {
 panel.add(ckTags)
 
 // Checkbox for details
-ckDetails = new JCheckBox("Details", true)
+ckDetails = new JCheckBox("Details", mergeDetails)
 ckDetails.addItemListener(new ItemListener() {
 	public void itemStateChanged(ItemEvent e) {
 		mergeDetails = (e.getStateChange() == ItemEvent.SELECTED) ? true : false
@@ -92,7 +92,7 @@ ckDetails.addItemListener(new ItemListener() {
 })
 panel.add(ckDetails)
 // Checkbox for attributes
-ckAttrs = new JCheckBox("Attributes", true)
+ckAttrs = new JCheckBox("Attributes", mergeAttrs)
 ckAttrs.addItemListener(new ItemListener() {
 	public void itemStateChanged(ItemEvent e) {
 		mergeAttrs = (e.getStateChange() == ItemEvent.SELECTED) ? true : false
@@ -100,7 +100,7 @@ ckAttrs.addItemListener(new ItemListener() {
 })
 panel.add(ckAttrs)
 // Checkbox for notes
-ckNotes = new JCheckBox("Notes", true)
+ckNotes = new JCheckBox("Notes", mergeNotes)
 ckNotes.addItemListener(new ItemListener() {
 	public void itemStateChanged(ItemEvent e) {
 		mergeNotes = (e.getStateChange() == ItemEvent.SELECTED) ? true : false
@@ -108,7 +108,7 @@ ckNotes.addItemListener(new ItemListener() {
 })
 panel.add(ckNotes)
 // Checkbox for childs
-ckChilds = new JCheckBox("Childs", true)
+ckChilds = new JCheckBox("Childs", mergeChilds)
 ckChilds.addItemListener(new ItemListener() {
 	public void itemStateChanged(ItemEvent e) {
 		mergeChilds = (e.getStateChange() == ItemEvent.SELECTED) ? true : false
@@ -116,7 +116,7 @@ ckChilds.addItemListener(new ItemListener() {
 })
 panel.add(ckChilds)
 // Checkbox for Connectors
-ckConns = new JCheckBox("Connectors", true)
+ckConns = new JCheckBox("Connectors", mergeConns)
 ckConns.addItemListener(new ItemListener() {
 	public void itemStateChanged(ItemEvent e) {
 		mergeConns = (e.getStateChange() == ItemEvent.SELECTED) ? true : false
