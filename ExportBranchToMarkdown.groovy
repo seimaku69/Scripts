@@ -12,11 +12,19 @@
     You can choose to create a TOC in your export.
 
     Be sure to permit operations (file/write) for Scripting-Plugin in Preferences !
+
+    Attention :
+    1. The order of Markdown titles is equal to 'Outline view' (F10) in the mindmap.
+    2. You can set the boolean values for exported elements to your own needs - they
+        are used as defaults for the checkboxes.
 */
 
 /* 
-    #todo 04 : Bereitstellung einer Auswahl, welche Elemente exportiert werden sollen..
-        (s. MergeSelectedNodes)
+    #todo 01 : Links in Attributen
+        Links die mit '/' beginnen werden nicht als solche exportiert !
+        
+    #todo 02 : Links zu Knoten in anderen Mindmaps
+        Links der Form '/../../Mindmap.mm#ID...' werden bislang nicht verarbeitet !
 */
 
 import java.io.FileWriter;
@@ -24,17 +32,32 @@ import java.io.IOException;
 import javax.swing.JFileChooser
 import javax.swing.filechooser.FileNameExtensionFilter
 import javax.swing.JOptionPane
+import javax.swing.JPanel
+import javax.swing.JCheckBox
+import java.awt.event.ItemListener
+import java.awt.event.ItemEvent
+import java.awt.GridLayout
 
 
 lf = System.lineSeparator()
 // Indicator for being a header-line - they start with "#"
 final String hIndicator = "#"
 
-// creating a TOC in Markdown file
-boolean createTOC = false
+// Default for creating a TOC in Markdown file
+boolean createTOC = true
+
+// exported elements
+boolean expAlias = true
+boolean expAttrs = true
+boolean expConns = true
+boolean expDetails = true
+boolean expLinks = true
+boolean expNotes = true
+boolean expTags = true
 
 def sb = new StringBuffer()
 def sbTOC = new StringBuffer()
+
 
 /*
     method  : getPrecStr
@@ -49,6 +72,7 @@ def String getPrecStr(int relLevel, String charStr) {
 	}
 	return prec
 }
+
 
 /*
     method  : addMetadata
@@ -65,6 +89,7 @@ def addMetadata(StringBuffer strBuff) {
     strBuff << "  " << lf
     strBuff << "End Metadata -->  " + lf
 }
+
 
 /*
     method  : getMDExportFile
@@ -93,6 +118,81 @@ def File getMdExportFile() {
     return file
 }
 
+
+// choosing which elements to export (JPanel and ItemListener)
+// -----------------------------------------------------
+
+JPanel panel = new JPanel()
+panel.setLayout(new GridLayout(7,1))
+
+// Checkbox for Alias
+ckAlias = new JCheckBox("Aliases", expAlias)
+ckAlias.addItemListener(new ItemListener() {
+	public void itemStateChanged(ItemEvent e) {
+		expAlias = (e.getStateChange() == ItemEvent.SELECTED) ? true : false
+	}
+})
+panel.add(ckAlias)
+
+// Checkbox for attributes
+ckAttrs = new JCheckBox("Attributes", expAttrs)
+ckAttrs.addItemListener(new ItemListener() {
+	public void itemStateChanged(ItemEvent e) {
+		expAttrs = (e.getStateChange() == ItemEvent.SELECTED) ? true : false
+	}
+})
+panel.add(ckAttrs)
+
+// Checkbox for Connectors (in- and outgoing edges)
+ckConns = new JCheckBox("Connectors", expConns)
+ckConns.addItemListener(new ItemListener() {
+	public void itemStateChanged(ItemEvent e) {
+		expConns = (e.getStateChange() == ItemEvent.SELECTED) ? true : false
+	}
+})
+panel.add(ckConns)
+
+// Checkbox for details
+ckDetails = new JCheckBox("Details", expDetails)
+ckDetails.addItemListener(new ItemListener() {
+	public void itemStateChanged(ItemEvent e) {
+		expDetails = (e.getStateChange() == ItemEvent.SELECTED) ? true : false
+	}
+})
+panel.add(ckDetails)
+
+// Checkbox for links (core node links)
+ckLinks = new JCheckBox("Links", expLinks)
+ckLinks.addItemListener(new ItemListener() {
+	public void itemStateChanged(ItemEvent e) {
+		expLinks = (e.getStateChange() == ItemEvent.SELECTED) ? true : false
+	}
+})
+panel.add(ckLinks)
+
+// Checkbox for notes
+ckNotes = new JCheckBox("Notes", expNotes)
+ckNotes.addItemListener(new ItemListener() {
+	public void itemStateChanged(ItemEvent e) {
+		expNotes = (e.getStateChange() == ItemEvent.SELECTED) ? true : false
+	}
+})
+panel.add(ckNotes)
+
+// Checkbox for tags
+ckTags = new JCheckBox("Tags", expTags)
+ckTags.addItemListener(new ItemListener() {
+	public void itemStateChanged(ItemEvent e) {
+		expTags = (e.getStateChange() == ItemEvent.SELECTED) ? true : false
+	}
+})
+panel.add(ckTags)
+
+// show dialog to select elements
+ret = JOptionPane.showConfirmDialog(ui.getFrame(), panel, "Export elements : ", JOptionPane.OK_CANCEL_OPTION)
+if (ret == JOptionPane.CANCEL_OPTION) return
+
+// -----------------------------------------------------
 
 
 // get a file for Markdown export
@@ -126,6 +226,7 @@ if (createTOC) {
 // adding metadata block
 addMetadata(sb)
 
+// Creating Markdown for each node in actual branch
 node.findAll().each {
     // write header - don't touch user defined headers
     transText = it.getTransformedText().strip()
@@ -144,25 +245,25 @@ node.findAll().each {
     }
 
     // alias of node
-    if (!it.getAlias().isEmpty()) {
+    if (expAlias && !it.getAlias().isEmpty()) {
         sb << "*Alias :* " << it.getAlias() << "  " << lf
     }
 
     // tags of node
     tagsList = it.getTags().getTags()
-    if (tagsList.size() > 0) {
+    if (expTags && tagsList.size() > 0) {
         sb << "*Tags :* " << tagsList.toString() << "  " << lf
     }
 
     // details of node
-    if (it.getDetails()) {
+    if (expDetails && it.getDetails()) {
         sb << "*Details :*  " << lf << it.getDetails().toString() << "  " << lf
     }
 
     // handle attributes - written as code-block - formulas calculated
-    if (!it.attributes.empty) {
+    if (expAttrs && !it.attributes.empty) {
         attrs = it.getAttributes()
-        sb << "*Attributes :*  " << lf
+        sb << "  " << lf << "*Attributes :*  " << lf
         sb << "  " << lf
         sb << "~~~" << lf
         for (i = 0; i < attrs.size(); i++) {
@@ -172,8 +273,11 @@ node.findAll().each {
     }
 
     // export Freeplane links (hyper, local hyper, website) as markdown
-    if (it.getLink()) {
+    if (expLinks && it.getLink()) {
         linkText = it.getLink().getText()
+        outLnkText = "Unnamed_Link"
+        outLnkUrl = linkText
+
         // link to another node - 'local hyperlink' - structure : #ID_...
         if (linkText.startsWith("#")) {
             linkID = linkText.replace("#", "")
@@ -195,43 +299,46 @@ node.findAll().each {
             outLnkUrl = linkText
             outLnkText = it.getPlainText()
         }
+
         sb << lf << "*Link :* [" << outLnkText << "]("
         sb << outLnkUrl << ")  " << lf
     }
 
-    it.getConnectorsOut().each { conn ->
-        linkedNode = conn.getTarget()
-        urlText = linkedNode.getText().toLowerCase()
-        urlText = urlText.replace(" ", "-")
-        outLnkUrl = "#".concat(urlText)
-        outLnkText = linkedNode.getText()
-        srcLabel = conn.getSourceLabel() ?: "n.a."
-        midLabel = conn.getMiddleLabel() ?: "n.a."
-        trgLabel = conn.getTargetLabel() ?: "n.a."
-        sb << lf << "*..linked to :* [" << outLnkText << "]("
-        sb << outLnkUrl << ") ; " << " Labesls{" << srcLabel << ", " 
-            << midLabel << ", " << trgLabel << "}" << lf
-    }
+    if (expConns) {
+        it.getConnectorsOut().each { conn ->
+            linkedNode = conn.getTarget()
+            urlText = linkedNode.getText().toLowerCase()
+            urlText = urlText.replace(" ", "-")
+            outLnkUrl = "#".concat(urlText)
+            outLnkText = linkedNode.getText()
+            srcLabel = conn.getSourceLabel() ?: "n.a."
+            midLabel = conn.getMiddleLabel() ?: "n.a."
+            trgLabel = conn.getTargetLabel() ?: "n.a."
+            sb << lf << "*..linked to :* [" << outLnkText << "]("
+            sb << outLnkUrl << ") ; " << " Labesls{" << srcLabel << ", " 
+                << midLabel << ", " << trgLabel << "}" << lf
+        }
 
-    it.getConnectorsIn().each { conn ->
-        sourceNode = conn.getSource()    
-        urlText = sourceNode.getText().toLowerCase()
-        urlText = urlText.replace(" ", "-")
-        srcLnkUrl = "#".concat(urlText)
-        srcLnkText = sourceNode.getText()
-        srcLabel = conn.getSourceLabel() ?: "n.a."
-        midLabel = conn.getMiddleLabel() ?: "n.a."
-        trgLabel = conn.getTargetLabel() ?: "n.a."
-        sb << lf << "*..linked from :* [" << srcLnkText << "]("
-        sb << srcLnkUrl << ") ; " << " Labesls{" << srcLabel << ", " 
-            << midLabel << ", " << trgLabel << "}" << lf
+        it.getConnectorsIn().each { conn ->
+            sourceNode = conn.getSource()    
+            urlText = sourceNode.getText().toLowerCase()
+            urlText = urlText.replace(" ", "-")
+            srcLnkUrl = "#".concat(urlText)
+            srcLnkText = sourceNode.getText()
+            srcLabel = conn.getSourceLabel() ?: "n.a."
+            midLabel = conn.getMiddleLabel() ?: "n.a."
+            trgLabel = conn.getTargetLabel() ?: "n.a."
+            sb << lf << "*..linked from :* [" << srcLnkText << "]("
+            sb << srcLnkUrl << ") ; " << " Labesls{" << srcLabel << ", " 
+                << midLabel << ", " << trgLabel << "}" << lf
+        }
     }
 
     // adding TOC after first title - it's empty if not created
     if (it == node) sb << sbTOC.toString()
 
-    // copy markdown note as paragraph text
-    if (it.getNote()) {
+    // copy note as paragraph text - should be markdown
+    if (expNotes && it.getNote()) {
         sb << "  " << lf << it.getNote() << "  " << lf
     }
 
