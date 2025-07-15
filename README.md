@@ -1,20 +1,22 @@
 <!-- Begin Metadata  
   
 [Freeplane file]:- '/home/markus/Zentrum/Projekte/Implementierung/Freeplane/Mindmaps/Github_Readme.mm'  
-[Export date]:- '2025-07-13 18:57:28'  
+[Export date]:- '2025-07-15 17:28:35'  
 [Export script]:- 'ExportBranchToMarkdown.groovy'  
-[Script author]:- 'Markus Seilnacht; seimaku(at)proton(dot)me'  
+[Script author]:- 'GitHub/seimaku69; Markus Seilnacht; seimaku(at)proton(dot)me'  
   
 End Metadata -->  
   
 # README - Freeplane Scripts
   
+  
 *Attributes :*  
   
-~~~
-author : Markus Seilnacht  
-date : 2025-07-13  
-~~~
+| Name | Value |
+| ---- | ----- |
+| author | Markus Seilnacht |
+| date | 2025-07-15 |
+  
   
 ## Table of Contents  
   
@@ -524,11 +526,14 @@ The notes are copied as they are - so it makes sense to write them in Markdown.
 
 **Attention :** Using content format 'standard' for notes and node-text is the best choice in my eyes, because 'markdown'  is not alway rendered correctly.  
 It makes no sense to do some complicated formatting in your notes and export them to Markdown - if you know how to
-use it.  
-..and vice versa a Markdown export will not be useful for you.  
-*If you want to export the whole mindmap you can simply select the root.*  
-
-*Formulas in node-texts and attributes are exported with calculated values and not as formulas.*  
+use Markdown.  
+..and vice versa if you don't know how to use Markdown an export will not be very useful for you.  
+  
+- The order (same level) of the titles in exported file are equal to the order of your nodes - see 'Outline view' (F10) in Freeplane.
+- If you want to export the whole mindmap you can simply select the root.
+- Formulas in node-texts and attributes are exported with calculated values and not as formulas.
+- You can set the boolean values for exported elements (beginning of script) to your own needs - they are used as defaults for the checkboxes in the dialog.
+- After a successful export you will be asked to open the file with the associated (markdown,system-setup) application.
   
 *Be careful about using headers ('# ...') in note text they are not recognized by the TOC - you have to update it after export !*
 
