@@ -78,14 +78,14 @@ def String getPrecStr(int relLevel, String charStr) {
     input   : StringBuffer to write to
 */
 def addMetadata(StringBuffer strBuff) {
-    strBuff << "<!-- Begin Metadata  " << lf
-    strBuff << "  " << lf
-    strBuff << "[Freeplane file]:- '" << node.getMindMap().getFile().getPath() << "'  " + lf
-    strBuff << "[Export date]:- '" << format(new Date(), "yyyy-MM-dd HH:mm:ss") << "'  " + lf
-    strBuff << "[Export script]:- 'ExportBranchToMarkdown.groovy'" << "  " + lf
-    strBuff << "[Script author]:- 'Markus Seilnacht; seimaku(at)proton(dot)me'" << "  " + lf
-    strBuff << "  " << lf
-    strBuff << "End Metadata -->  " + lf
+    strBuff << "<!-- Begin Metadata  $lf"
+    strBuff << "  $lf"
+    strBuff << "[Freeplane file]:- '" << node.getMindMap().getFile().getPath() << "'  $lf"
+    strBuff << "[Export date]:- '" << format(new Date(), "yyyy-MM-dd HH:mm:ss") << "'  $lf"
+    strBuff << "[Export script]:- 'ExportBranchToMarkdown.groovy'  $lf"
+    strBuff << "[Script author]:- 'GitHub/seimaku69; Markus Seilnacht; seimaku(at)proton(dot)me'  $lf"
+    strBuff << "  $lf"
+    strBuff << "End Metadata -->  $lf"
 }
 
 
@@ -96,7 +96,7 @@ def addMetadata(StringBuffer strBuff) {
 */
 def File getMdExportFile() {
     JFileChooser fChooser = ui.newFileChooser()
-    fChooser.setDialogTitle("Export selected node as Markdown to file..")
+    fChooser.setDialogTitle("Export selected branch as Markdown to file..")
     FileNameExtensionFilter filter = new FileNameExtensionFilter("Markdown files", "md")
     fChooser.setFileFilter(filter);
     fName = node.text.strip().replace(" ","") + ".md"
@@ -116,6 +116,12 @@ def File getMdExportFile() {
     return file
 }
 
+// get a file for Markdown export
+expFile = getMdExportFile()
+if(!expFile) {
+    c.setStatusInfo("standard", "Markdown export aborted ! ", "messagebox_warning")
+    return
+}
 
 // choosing which elements to export (JPanel and ItemListener)
 // -----------------------------------------------------
@@ -192,14 +198,6 @@ if (ret == JOptionPane.CANCEL_OPTION) return
 
 // -----------------------------------------------------
 
-
-// get a file for Markdown export
-expFile = getMdExportFile()
-if(!expFile) {
-    c.setStatusInfo("standard", "Markdown export aborted ! ", "messagebox_warning")
-    return
-}
-
 // asking for creation of TOC in Markdown file
 int toc = ui.showConfirmDialog(null, "Do you want to create a TOC (table of contents) ?",
 "Markdown Export", JOptionPane.YES_NO_OPTION)
@@ -210,15 +208,15 @@ startNodeLevel = node.getNodeLevel(true)
 
 // write TOC to it's own Stringbuffer
 if (createTOC) {
-    sbTOC << "  " << lf << getPrecStr(2, hIndicator) << " Table of Contents  "
-    sbTOC << lf << "  " << lf
+    sbTOC << "  $lf" << getPrecStr(2, hIndicator) << " Table of Contents  $lf"
+    sbTOC << "  $lf"
     for (n in node.findAll()) {
         nLevel = n.getNodeLevel(true)
         stripText = n.getTransformedText().strip()
         lnk = stripText.toLowerCase().replace(" ", "-")
-        sbTOC << getPrecStr(nLevel - startNodeLevel, "\t") << "- [$stripText](#$lnk)  " << lf
+        sbTOC << getPrecStr(nLevel - startNodeLevel, "\t") << "- [$stripText](#$lnk)  $lf"
     }
-    sbTOC << lf << "  " << lf
+    sbTOC << "$lf  $lf"
 }
 
 // adding metadata block
@@ -229,46 +227,46 @@ node.findAll().each {
     // write header - don't touch user defined headers
     transText = it.getTransformedText().strip()
     if (it.getPlainText().startsWith(hIndicator)) {
-        sb << "  " << lf << transText << lf
+        sb << "  $lf" << transText << lf
     }
     else {
-        sb << "  " << lf << getPrecStr(it.getNodeLevel(true) - startNodeLevel + 1, hIndicator) << " $transText" << lf
+        sb << "  $lf" << getPrecStr(it.getNodeLevel(true) - startNodeLevel + 1, hIndicator) << " " << transText << lf
     }
-    sb << "  " << lf
+    sb << "  $lf"
 
     // picture assigned to node
     if (it.getExternalObject()) {
         uri = it.getExternalObject().getUri()
-        sb << "![$it.text]($uri)  " << lf
+        sb << "![$it.text]($uri)  $lf"
     }
 
     // alias of node
     if (expAlias && !it.getAlias().isEmpty()) {
-        sb << "*Alias :* " << it.getAlias() << "  " << lf
+        sb << "*Alias :* " << it.getAlias() << "  $lf"
     }
 
     // tags of node
     tagsList = it.getTags().getTags()
     if (expTags && tagsList.size() > 0) {
-        sb << "*Tags :* " << tagsList.toString() << "  " << lf
+        sb << "*Tags :* " << tagsList.toString() << "  $lf"
     }
 
     // details of node
     if (expDetails && it.getDetails()) {
-        sb << "*Details :*  " << lf << it.getDetails().toString() << "  " << lf
+        sb << "*Details :*  $lf" << it.getDetails().toString() << "  $lf"
     }
 
     // handle attributes - written as code-block - formulas calculated (getValues)
     if (expAttrs && !it.attributes.empty) {
         attrs = it.getAttributes().getTransformed()
-        sb << "  " << lf << "*Attributes :*  " << lf
-        sb << "  " << lf
-        sb << "| Name | Value |" << lf
-        sb << "| ---- | ----- |" << lf
+        sb << "  $lf*Attributes :*  $lf"
+        sb << "  $lf"
+        sb << "| Name | Value |$lf"
+        sb << "| ---- | ----- |$lf"
         for (i = 0; i < attrs.size(); i++) {
             sb << "| " << attrs.getNames()[i] << " | " << attrs.getValues()[i] << " |" << lf
         }
-        sb << "  " << lf
+        sb << "  $lf"
     }
 
     // export Freeplane links (hyper, local hyper, website) as markdown
@@ -298,9 +296,7 @@ node.findAll().each {
             outLnkUrl = linkText
             outLnkText = it.getPlainText()
         }
-
-        sb << lf << "*Link :* [" << outLnkText << "]("
-        sb << outLnkUrl << ")  " << lf
+        sb << "*Link :* [$outLnkText]($outLnkUrl)  $lf"
     }
 
     if (expConns) {
@@ -315,7 +311,7 @@ node.findAll().each {
             trgLabel = conn.getTargetLabel() ?: "n.a."
             sb << lf << "*..linked to :* [" << outLnkText << "]("
             sb << outLnkUrl << ") ; " << " Labesls{" << srcLabel << ", " 
-                << midLabel << ", " << trgLabel << "}" << lf
+                << midLabel << ", " << trgLabel << "}$lf"
         }
 
         it.getConnectorsIn().each { conn ->
@@ -329,7 +325,7 @@ node.findAll().each {
             trgLabel = conn.getTargetLabel() ?: "n.a."
             sb << lf << "*..linked from :* [" << srcLnkText << "]("
             sb << srcLnkUrl << ") ; " << " Labesls{" << srcLabel << ", " 
-                << midLabel << ", " << trgLabel << "}" << lf
+                << midLabel << ", " << trgLabel << "}$lf"
         }
     }
 
@@ -338,7 +334,7 @@ node.findAll().each {
 
     // copy note as paragraph text - should be markdown
     if (expNotes && it.getNote()) {
-        sb << "  " << lf << it.getNote() << "  " << lf
+        sb << "  $lf" << it.getNote() << "  $lf"
     }
 
 }
@@ -349,9 +345,18 @@ try {
     myWriter.write(sb.toString())
     myWriter.close();
     c.setStatusInfo("standard", "Successfully exported to " + expFile.getPath(), "button_ok")
-    ui.informationMessage("Successfully exported to " + expFile.getPath())
+    //ui.informationMessage("Successfully exported to " + expFile.getPath())
 } catch (IOException ex) {
     ui.errorMessage("An error occurred ! " + ex)
+    return
 }
 // write export to Root-Note
 // node.mindMap.root.note = sb.toString()
+
+// asking for opening exported file with associated (to markdown) application
+int openExp = ui.showConfirmDialog(null, "Export to " + expFile.getPath() + " successful ! $lf"
+    + "Do you want to open this file ?","Markdown Export", JOptionPane.YES_NO_OPTION)
+if (openExp == JOptionPane.YES_OPTION) {
+    expUri = java.net.URI.create(expFile.getPath())
+    loadUri(expUri)
+}
