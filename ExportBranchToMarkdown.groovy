@@ -21,10 +21,8 @@
 
 /* 
     #todo 01 : Links in Attributen
-        Links die mit '/' beginnen werden nicht als solche exportiert !
-        
-    #todo 02 : Links zu Knoten in anderen Mindmaps
-        Links der Form '/../../Mindmap.mm#ID...' werden bislang nicht verarbeitet !
+        Links die mit '/' oder '# ' beginnen, werden als Text exportiert !
+
 */
 
 import java.io.FileWriter;
@@ -196,8 +194,8 @@ if (ret == JOptionPane.CANCEL_OPTION) return
 
 
 // get a file for Markdown export
-file = getMdExportFile()
-if(!file) {
+expFile = getMdExportFile()
+if(!expFile) {
     c.setStatusInfo("standard", "Markdown export aborted ! ", "messagebox_warning")
     return
 }
@@ -260,16 +258,17 @@ node.findAll().each {
         sb << "*Details :*  " << lf << it.getDetails().toString() << "  " << lf
     }
 
-    // handle attributes - written as code-block - formulas calculated
+    // handle attributes - written as code-block - formulas calculated (getValues)
     if (expAttrs && !it.attributes.empty) {
-        attrs = it.getAttributes()
+        attrs = it.getAttributes().getTransformed()
         sb << "  " << lf << "*Attributes :*  " << lf
         sb << "  " << lf
-        sb << "~~~" << lf
+        sb << "| Name | Value |" << lf
+        sb << "| ---- | ----- |" << lf
         for (i = 0; i < attrs.size(); i++) {
-            sb << attrs.getNames()[i] << " : " << attrs.getValues()[i] << "  " << lf
+            sb << "| " << attrs.getNames()[i] << " | " << attrs.getValues()[i] << " |" << lf
         }
-        sb << "~~~" << lf
+        sb << "  " << lf
     }
 
     // export Freeplane links (hyper, local hyper, website) as markdown
@@ -346,11 +345,11 @@ node.findAll().each {
 
 // write export to choosen file
 try {
-    FileWriter myWriter = new FileWriter(file)
+    FileWriter myWriter = new FileWriter(expFile)
     myWriter.write(sb.toString())
     myWriter.close();
-    c.setStatusInfo("standard", "Successfully exported to " + file, "button_ok")
-    ui.informationMessage("Successfully exported to " + file)
+    c.setStatusInfo("standard", "Successfully exported to " + expFile.getPath(), "button_ok")
+    ui.informationMessage("Successfully exported to " + expFile.getPath())
 } catch (IOException ex) {
     ui.errorMessage("An error occurred ! " + ex)
 }
