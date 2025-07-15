@@ -32,10 +32,11 @@ If you don't save the temporary file in your editor there are no changes in your
 import java.io.File
 
 // final String editor = "xed --new-window"
-// final String editor = "/usr/bin/ghostwriter"    // Markdown editor with preview
+final String editor = "/usr/bin/ghostwriter"    // free, fast,with preview
+// final String editor = "/home/markus/Anwendungen/marktext-x86_64.AppImage"
 // final String editor = "/usr/bin/notepadqq"
 // final String editor = "/opt/sublime_text/sublime_text -w"
-final String editor = "/usr/bin/typora"
+// final String editor = "/usr/bin/typora"
 
 // check content type of note to set extension 
 // extensions determines often syntax highlighting in an editor
